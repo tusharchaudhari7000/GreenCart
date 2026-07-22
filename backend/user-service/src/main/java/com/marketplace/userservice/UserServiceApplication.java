@@ -1,4 +1,4 @@
-package com.greencart.user_service;
+package com.marketplace.userservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
