@@ -6,3 +6,5 @@ timeout /t 10
 start "User Service" cmd /k "cd backend\user-service && mvnw.cmd spring-boot:run"
 timeout /t 10
 start "Product Service" cmd /k "cd backend\product-service && mvnw.cmd spring-boot:run"
+timeout /t 10
+start "Admin Service" cmd /k "cd "backend\admin_service(.NET)\GreenCart_Admin_Service(.NET)" && dotnet run"

@@ -31,4 +31,12 @@ public class GatewayConfig {
                 .filter(lb("product-service"))
                 .build();
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> adminServiceRoute() {
+        return route("admin-service")
+                .route(path("/admin/**"), http())
+                .filter(lb("admin-service"))
+                .build();
+    }
 }
