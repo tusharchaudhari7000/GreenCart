@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
@@ -367,22 +367,14 @@ public partial class GreencartdbContext : DbContext
 
             entity.HasIndex(e => e.Email, "email").IsUnique();
 
-            entity.HasIndex(e => e.AreaId, "fk_users_area");
-
             entity.HasIndex(e => e.QuestionId, "question_id");
-
-            entity.HasIndex(e => e.RoleId, "role_id");
 
             entity.HasIndex(e => e.Username, "username").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.AadhaarNo)
-                .HasMaxLength(12)
-                .HasColumnName("aadhaar_no");
             entity.Property(e => e.Answer)
                 .HasMaxLength(255)
                 .HasColumnName("answer");
-            entity.Property(e => e.AreaId).HasColumnName("area_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp")
@@ -409,18 +401,9 @@ public partial class GreencartdbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("username");
 
-            entity.HasOne(d => d.Area).WithMany(p => p.Users)
-                .HasForeignKey(d => d.AreaId)
-                .HasConstraintName("fk_users_area");
-
             entity.HasOne(d => d.Question).WithMany(p => p.Users)
                 .HasForeignKey(d => d.QuestionId)
                 .HasConstraintName("users_ibfk_3");
-
-            entity.HasOne(d => d.Role).WithMany(p => p.Users)
-                .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("users_ibfk_1");
         });
 
         OnModelCreatingPartial(modelBuilder);

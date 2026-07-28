@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace GreenCart_Admin_Service_.NET_.Models;
@@ -30,10 +31,13 @@ public partial class User
 
     public DateTime? CreatedAt { get; set; }
 
+    [NotMapped]
     public string? AadhaarNo { get; set; }
 
+    [NotMapped]
     public int? AreaId { get; set; }
 
+    [NotMapped]
     public virtual Area? Area { get; set; }
 
     [JsonIgnore]
@@ -44,5 +48,6 @@ public partial class User
 
     public virtual SecurityQuestion? Question { get; set; }
 
+    [NotMapped]
     public virtual Role Role { get; set; } = null!;
 }

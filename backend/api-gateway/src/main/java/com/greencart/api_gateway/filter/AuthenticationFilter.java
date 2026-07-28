@@ -38,6 +38,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
+        MutableHttpServletRequest mutableRequest = null;
         try {
             jwtUtil.validateToken(token);
             
@@ -46,16 +47,17 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             String userId = String.valueOf(claims.get("userId"));
             String role = claims.get("role", String.class);
 
-            MutableHttpServletRequest mutableRequest = new MutableHttpServletRequest(request);
+            mutableRequest = new MutableHttpServletRequest(request);
             mutableRequest.putHeader("X-User-Id", userId);
             mutableRequest.putHeader("X-User-Role", role);
-
-            filterChain.doFilter(mutableRequest, response);
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid Token: " + e.getMessage());
             e.printStackTrace();
+            return;
         }
+
+        filterChain.doFilter(mutableRequest, response);
     }
 }

@@ -39,4 +39,12 @@ public class GatewayConfig {
                 .filter(lb("admin-service"))
                 .build();
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> buyerServiceRoute() {
+        return route("buyer-service")
+                .route(path("/buyer/**"), http())
+                .filter(lb("buyer-service"))
+                .build();
+    }
 }

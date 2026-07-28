@@ -20,8 +20,6 @@ namespace GreenCart_Admin_Service_.NET_.Controllers
         {
             return await _context.Users
                 .Where(u => u.RoleId == 2)
-                .Include(u => u.Area)
-                .Include(u => u.Role)
                 .ToListAsync();
         }
 
@@ -30,8 +28,6 @@ namespace GreenCart_Admin_Service_.NET_.Controllers
         {
             return await _context.Users
                 .Where(u => u.RoleId == 3)
-                .Include(u => u.Area)
-                .Include(u => u.Role)
                 .ToListAsync();
         }
 

@@ -26,7 +26,7 @@
                                                                  ],
                                                       "body":  {
                                                                    "mode":  "raw",
-                                                                   "raw":  "{\n    \"username\": \"johndoe\",\n    \"password\": \"password123\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john@example.com\",\n    \"phone\": \"1234567890\",\n    \"answer\": \"black\",\n    \"roleId\": 3,\n    \"questionId\": 1\n}"
+                                                                   "raw":  "{\n    \"username\": \"johndoe_final\",\n    \"password\": \"password123\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john_final@example.com\",\n    \"phone\": \"1234567890\",\n    \"roleId\": 3,\n    \"questionId\": 1,\n    \"answer\": \"black\"\n}"
                                                                },
                                                       "url":  {
                                                                   "raw":  "{{baseUrl}}/user/register",
@@ -52,7 +52,7 @@
                                                                  ],
                                                       "body":  {
                                                                    "mode":  "raw",
-                                                                   "raw":  "{\n    \"username\": \"johndoe\",\n    \"password\": \"password123\"\n}"
+                                                                   "raw":  "{\n    \"username\": \"johndoe_final\",\n    \"password\": \"password123\"\n}"
                                                                },
                                                       "url":  {
                                                                   "raw":  "{{baseUrl}}/user/login",
@@ -793,6 +793,294 @@
                                                               },
                                                       "header":  [
 
+                                                                 ]
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Buyer Service",
+                     "item":  [
+                                  {
+                                      "name":  "Add To Cart",
+                                      "request":  {
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/cart/add",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "cart",
+                                                                               "add"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\n    \"buyerId\": 1,\n    \"stockId\": 5,\n    \"quantity\": 2.0\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               },
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Cart",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/cart/1",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "cart",
+                                                                               "1"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Cart Item",
+                                      "request":  {
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/cart/item/1",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "cart",
+                                                                               "item",
+                                                                               "1"
+                                                                           ]
+                                                              },
+                                                      "method":  "PUT",
+                                                      "body":  {
+                                                                   "raw":  "{\n    \"quantity\": 5.0\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               },
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Remove Cart Item",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/cart/item/1",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "cart",
+                                                                               "item",
+                                                                               "1"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Clear Cart",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/cart/1/clear",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "cart",
+                                                                               "1",
+                                                                               "clear"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Place Order",
+                                      "request":  {
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/orders/place",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "orders",
+                                                                               "place"
+                                                                           ]
+                                                              },
+                                                      "method":  "POST",
+                                                      "body":  {
+                                                                   "raw":  "{\n    \"buyerId\": 1,\n    \"paymentMethod\": \"CASH\"\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               },
+                                                                   "mode":  "raw"
+                                                               },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Buyer Orders",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/orders/buyer/1",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "orders",
+                                                                               "buyer",
+                                                                               "1"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Order by ID",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/orders/1",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "orders",
+                                                                               "1"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Farmer Orders (Seller)",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/farmer/orders/seller/1",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "farmer",
+                                                                               "orders",
+                                                                               "seller",
+                                                                               "1"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{farmer_token}}"
+                                                                     }
+                                                                 ]
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Available Products",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  {
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "raw":  "{{baseUrl}}/buyer/api/products/available",
+                                                                  "path":  [
+                                                                               "buyer",
+                                                                               "api",
+                                                                               "products",
+                                                                               "available"
+                                                                           ]
+                                                              },
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "type":  "text",
+                                                                         "value":  "Bearer {{buyer_token}}"
+                                                                     }
                                                                  ]
                                                   }
                                   }
