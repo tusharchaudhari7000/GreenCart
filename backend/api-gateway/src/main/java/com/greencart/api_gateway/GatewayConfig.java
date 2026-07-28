@@ -20,4 +20,15 @@ public class GatewayConfig {
                 .filter(lb("user-service"))
                 .build();
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> productServiceRoute() {
+        return route("product-service")
+                .route(path("/api/products/**")
+                        .or(path("/api/categories/**"))
+                        .or(path("/api/subcategories/**"))
+                        .or(path("/stocks/**")), http())
+                .filter(lb("product-service"))
+                .build();
+    }
 }
