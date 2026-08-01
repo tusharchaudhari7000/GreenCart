@@ -1,0 +1,201 @@
+.farmer-orders-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.farmer-orders-header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.farmer-orders-header h2 {
+    color: #1b5e20;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.order-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.order-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(46, 125, 50, 0.15);
+}
+
+.order-card-header {
+    background: #4caf50;
+    padding: 1.25rem;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #388e3c;
+}
+
+.order-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.order-date {
+    font-size: 0.85rem;
+    color: #000 !important;
+    font-weight: 600;
+    opacity: 1 !important;
+}
+
+.payment-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.payment-badge.pending {
+    background: #fff9c4;
+    color: #f57f17;
+}
+
+.payment-badge.success {
+    background: #c8e6c9;
+    color: #1b5e20;
+}
+
+.order-card-body {
+    padding: 1.5rem;
+}
+
+.buyer-info {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.buyer-info p {
+    margin: 0.25rem 0;
+    color: #000;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.buyer-info strong {
+    color: #000;
+    font-weight: 700;
+}
+
+.items-list {
+    margin-bottom: 1.5rem;
+}
+
+.items-list h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-name {
+    font-weight: 500;
+    color: #2e7d32;
+}
+
+.item-qty {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.item-price {
+    font-weight: 600;
+    color: #333;
+}
+
+.order-card-footer {
+    padding: 1.25rem;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-amount {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1b5e20;
+}
+
+.mark-paid-btn {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.mark-paid-btn:hover {
+    background: #1b5e20;
+}
+
+.loading-container,
+.empty-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.empty-container p {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .orders-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .farmer-orders-container {
+        padding: 1rem;
+    }
+}
