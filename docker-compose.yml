@@ -1,0 +1,129 @@
+version: '3.8'
+
+networks:
+  greencart-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: greencart-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: greencartdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/seed_data.sql:/docker-entrypoint-initdb.d/seed_data.sql
+    networks:
+      - greencart-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  discovery-server:
+    build:
+      context: ./backend/discovery-server
+    container_name: discovery-server
+    restart: always
+    ports:
+      - "8761:8761"
+    networks:
+      - greencart-network
+
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+    container_name: api-gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    depends_on:
+      - discovery-server
+    networks:
+      - greencart-network
+
+  user-service:
+    build:
+      context: ./backend/user-service
+    container_name: user-service
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/greencartdb?useSSL=false&allowPublicKeyRetrieval=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    networks:
+      - greencart-network
+
+  product-service:
+    build:
+      context: ./backend/product-service
+    container_name: product-service
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/greencartdb?useSSL=false&allowPublicKeyRetrieval=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    networks:
+      - greencart-network
+
+  buyer-service:
+    build:
+      context: ./backend/buyer-service
+    container_name: buyer-service
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/greencartdb?useSSL=false&allowPublicKeyRetrieval=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    networks:
+      - greencart-network
+
+  admin-service:
+    build:
+      context: "./backend/admin_service(.NET)/GreenCart_Admin_Service(.NET)"
+    container_name: admin-service
+    restart: always
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mysql-db;Database=greencartdb;User=root;Password=root;
+      - eureka__client__serviceUrl=http://discovery-server:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    networks:
+      - greencart-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: greencart-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - greencart-network
