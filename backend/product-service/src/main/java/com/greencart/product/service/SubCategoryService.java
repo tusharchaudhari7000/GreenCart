@@ -1,6 +1,5 @@
 package com.greencart.product.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greencart.product.entities.SubCategory;
@@ -11,7 +10,6 @@ import java.util.List;
 @Service
 public class SubCategoryService {
 
-    @Autowired
     private final SubCategoryRepository subCategoryRepository;
 
     public SubCategoryService(SubCategoryRepository subCategoryRepository) {

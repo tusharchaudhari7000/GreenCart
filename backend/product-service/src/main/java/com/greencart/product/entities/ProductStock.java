@@ -31,7 +31,7 @@ public class ProductStock {
 	private Product product;
 
 	@Column(name = "created_at")
-	private LocalDateTime created_at;
+	private LocalDateTime createdAt;
 
 	@Column(name = "image_path", length = 500)
 	private String imagePath;
@@ -76,12 +76,12 @@ public class ProductStock {
 		this.product = product;
 	}
 
-	public LocalDateTime getCreated_at() {
-		return created_at;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public String getImagePath() {

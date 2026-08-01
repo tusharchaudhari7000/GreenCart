@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,14 +21,17 @@ import com.greencart.buyer.repositories.ProductStockRepository;
 @Service
 public class CartService {
 
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
+    private final ProductStockRepository productStockRepository;
 
-    @Autowired
-    private CartItemRepository cartItemRepository;
-
-    @Autowired
-    private ProductStockRepository productStockRepository;
+    public CartService(CartRepository cartRepository,
+                       CartItemRepository cartItemRepository,
+                       ProductStockRepository productStockRepository) {
+        this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
+        this.productStockRepository = productStockRepository;
+    }
 
     @Transactional
     public CartDTO addToCart(AddToCartRequest request) {

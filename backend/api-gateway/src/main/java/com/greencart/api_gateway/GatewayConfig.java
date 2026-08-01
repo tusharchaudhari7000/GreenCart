@@ -2,8 +2,14 @@ package com.greencart.api_gateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.cloud.gateway.server.mvc.filter.LoadBalancerFilterFunctions.lb;
 import static org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http;
@@ -14,10 +20,36 @@ import static org.springframework.web.servlet.function.RequestPredicates.path;
 public class GatewayConfig {
 
     @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedOriginPatterns(List.of("*"));
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        corsConfig.setAllowedHeaders(Arrays.asList("*"));
+        corsConfig.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return new CorsFilter(source);
+    }
+
+    @Bean
     public RouterFunction<ServerResponse> userServiceRoute() {
         return route("user-service")
-                .route(path("/user/**"), http())
+                .route(path("/user/**").or(path("/api/admin/**")), http())
                 .filter(lb("user-service"))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> buyerServiceRoute() {
+        return route("buyer-service")
+                .route(path("/api/products/available")
+                        .or(path("/api/cart/**"))
+                        .or(path("/api/orders/**"))
+                        .or(path("/api/farmer/orders/**"))
+                        .or(path("/buyer/**")), http())
+                .filter(lb("buyer-service"))
                 .build();
     }
 
@@ -37,14 +69,6 @@ public class GatewayConfig {
         return route("admin-service")
                 .route(path("/admin/**"), http())
                 .filter(lb("admin-service"))
-                .build();
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> buyerServiceRoute() {
-        return route("buyer-service")
-                .route(path("/buyer/**"), http())
-                .filter(lb("buyer-service"))
                 .build();
     }
 }

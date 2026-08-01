@@ -3,7 +3,6 @@ package com.greencart.product.controller;
 import com.greencart.product.entities.Category;
 import com.greencart.product.service.CategoryService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class CategoryController {
 
-    @Autowired
     private final CategoryService categoryService;
 
     public CategoryController(CategoryService categoryService) {

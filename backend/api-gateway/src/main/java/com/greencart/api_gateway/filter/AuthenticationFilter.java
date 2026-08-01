@@ -24,8 +24,31 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // Allow public endpoints like login and register
-        if (path.startsWith("/user/login") || path.startsWith("/user/register")) {
+        // Allow OPTIONS preflight requests and public endpoints (login, register, product catalog)
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod()) || 
+            path.startsWith("/user/login") || 
+            path.startsWith("/user/register") ||
+            path.startsWith("/api/products/available") ||
+            path.startsWith("/api/categories")) {
+            
+            // If authorization header is provided anyway, extract user headers
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                try {
+                    String token = authHeader.substring(7);
+                    jwtUtil.validateToken(token);
+                    Claims claims = jwtUtil.extractAllClaims(token);
+                    String userId = String.valueOf(claims.get("userId"));
+                    String role = claims.get("role", String.class);
+                    
+                    MutableHttpServletRequest mutableRequest = new MutableHttpServletRequest(request);
+                    mutableRequest.putHeader("X-User-Id", userId);
+                    mutableRequest.putHeader("X-User-Role", role);
+                    filterChain.doFilter(mutableRequest, response);
+                    return;
+                } catch (Exception ignored) {}
+            }
+
             filterChain.doFilter(request, response);
             return;
         }

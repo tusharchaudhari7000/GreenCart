@@ -1,32 +1,40 @@
 package com.marketplace.userservice.services;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.marketplace.userservice.dto.RegisterUserRequest;
 import com.marketplace.userservice.entities.SecurityQuestion;
 import com.marketplace.userservice.entities.User;
 import com.marketplace.userservice.enums.UserStatus;
+import com.marketplace.userservice.exceptions.AccountNotVerifiedException;
+import com.marketplace.userservice.exceptions.InvalidCredentialsException;
+import com.marketplace.userservice.exceptions.InvalidQuestionException;
 import com.marketplace.userservice.repositories.SecurityQuestionRepo;
 import com.marketplace.userservice.repositories.UserRepo;
 
 @Service
 public class UserServices {
 
-    @Autowired UserRepo userrepo;
-    @Autowired SecurityQuestionRepo questionRepo;
-    @Autowired PasswordEncoder passwordEncoder;
+    private final UserRepo userRepo;
+    private final SecurityQuestionRepo questionRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public List<User> getAll() { return userrepo.findAll(); }
+    public UserServices(UserRepo userRepo, SecurityQuestionRepo questionRepo, PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.questionRepo = questionRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<User> getAll() { return userRepo.findAll(); }
 
     public User login(String username, String password) {
-        User user = userrepo.findByUsername(username);
-        if (user == null) throw new RuntimeException("INVALID_CREDENTIALS");
+        User user = userRepo.findByUsername(username);
+        if (user == null) throw new InvalidCredentialsException("INVALID_CREDENTIALS");
         if (!passwordEncoder.matches(password, user.getPassword()))
-            throw new RuntimeException("INVALID_CREDENTIALS");
+            throw new InvalidCredentialsException("INVALID_CREDENTIALS");
         if (user.getStatus().equals(UserStatus.PENDING.getCode()))
-            throw new RuntimeException("ACCOUNT_NOT_VERIFIED");
+            throw new AccountNotVerifiedException("ACCOUNT_NOT_VERIFIED");
         return user;
     }
 
@@ -39,15 +47,16 @@ public class UserServices {
         user.setRoleId(request.getRoleId());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
+        user.setAadhaarNo(request.getAadhaarNo());
         user.setAnswer(request.getAnswer());
         user.setStatus(request.getRoleId() == 2 ? UserStatus.PENDING.getCode() : UserStatus.ACTIVE.getCode());
 
         SecurityQuestion q = questionRepo.findById(request.getQuestionId())
-                .orElseThrow(() -> new RuntimeException("Invalid question"));
+                .orElseThrow(() -> new InvalidQuestionException("Invalid question"));
         user.setQuestion(q);
 
-        return userrepo.save(user);
+        return userRepo.save(user);
     }
 
-    public User getByUsername(String username) { return userrepo.findByUsername(username); }
+    public User getByUsername(String username) { return userRepo.findByUsername(username); }
 }

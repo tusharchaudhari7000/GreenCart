@@ -37,6 +37,11 @@ public class ProductService {
                 .orElseThrow(
                         () -> new RuntimeException("Subcategory not found with ID: " + request.getSubCategoryId()));
 
+        // Fallback default produce image if non provided
+        if (request.getImageUrl() == null || request.getImageUrl().trim().isEmpty()) {
+            request.setImageUrl("https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&q=80");
+        }
+
         // Create Product entity
         Product product = new Product();
         product.setPname(subCategory.getSubCategoryName()); // Product name = subcategory name
@@ -53,7 +58,7 @@ public class ProductService {
         stock.setPrice(request.getPrice());
         stock.setQuantity(request.getQuantity());
         stock.setImagePath(request.getImageUrl());
-        stock.setCreated_at(LocalDateTime.now());
+        stock.setCreatedAt(LocalDateTime.now());
 
         // Save stock
         ProductStock savedStock = productStockRepository.save(stock);
@@ -123,7 +128,7 @@ public class ProductService {
         dto.setPrice(stock.getPrice());
         dto.setQuantity(stock.getQuantity());
         dto.setImagePath(stock.getImagePath());
-        dto.setCreatedAt(stock.getCreated_at());
+        dto.setCreatedAt(stock.getCreatedAt());
         return dto;
     }
 

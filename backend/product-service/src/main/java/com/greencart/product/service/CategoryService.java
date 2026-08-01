@@ -1,6 +1,5 @@
 package com.greencart.product.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greencart.product.entities.Category;
@@ -11,7 +10,6 @@ import java.util.List;
 @Service
 public class CategoryService {
 
-    @Autowired
     private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {

@@ -2,7 +2,6 @@ package com.greencart.buyer.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,8 +21,11 @@ import com.greencart.buyer.services.OrderService;
 @RequestMapping("/api/farmer/orders")
 public class FarmerOrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public FarmerOrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     /**
      * Get all orders containing products sold by a specific farmer/seller

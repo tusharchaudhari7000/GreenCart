@@ -17,6 +17,7 @@ public class User {
     @Column(name = "username", length = 50, nullable = false, unique = true)
     private String username;
 
+    @JsonIgnore
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 
@@ -34,6 +35,9 @@ public class User {
 
     @Column(name = "phone", length = 15)
     private String phone;
+
+    @Column(name = "aadhaar_no", length = 20)
+    private String aadhaarNo;
 
     @Column(name = "status", nullable = false)
     private Integer status;
@@ -73,6 +77,8 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+    public String getAadhaarNo() { return aadhaarNo; }
+    public void setAadhaarNo(String aadhaarNo) { this.aadhaarNo = aadhaarNo; }
     public Integer getStatus() { return status; }
     public void setStatus(Integer status) { this.status = status; }
     public SecurityQuestion getQuestion() { return question; }

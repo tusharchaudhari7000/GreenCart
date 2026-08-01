@@ -5,7 +5,6 @@ import com.greencart.product.dto.ProductResponseDTO;
 import com.greencart.product.entities.Product;
 import com.greencart.product.service.ProductService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    @Autowired
     private final ProductService productService;
 
     // Constructor Injection (Recommended)

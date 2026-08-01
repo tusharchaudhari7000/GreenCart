@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greencart.buyer.entities.ProductStock;
@@ -14,8 +13,11 @@ import com.greencart.buyer.repositories.ProductStockRepository;
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductStockRepository productStockRepository;
+    private final ProductStockRepository productStockRepository;
+
+    public ProductService(ProductStockRepository productStockRepository) {
+        this.productStockRepository = productStockRepository;
+    }
 
     /**
      * Get all available products with stock information

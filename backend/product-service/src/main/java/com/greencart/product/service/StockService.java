@@ -9,7 +9,11 @@ import java.util.List;
 @Service
 public class StockService {
 
-    private final ProductStockRepository stockRepository = null;
+    private final ProductStockRepository stockRepository;
+
+    public StockService(ProductStockRepository stockRepository) {
+        this.stockRepository = stockRepository;
+    }
 
     public ProductStock addStock(ProductStock stock) {
         return stockRepository.save(stock);

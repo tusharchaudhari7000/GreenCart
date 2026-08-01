@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,26 +31,29 @@ import com.greencart.buyer.repositories.ProductStockRepository;
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final PaymentRepository paymentRepository;
+    private final CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
+    private final ProductStockRepository productStockRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-
-    @Autowired
-    private PaymentRepository paymentRepository;
-
-    @Autowired
-    private CartRepository cartRepository;
-
-    @Autowired
-    private CartItemRepository cartItemRepository;
-
-    @Autowired
-    private ProductStockRepository productStockRepository;
-
-    @Autowired
-    private org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
+    public OrderService(OrderRepository orderRepository,
+                        OrderItemRepository orderItemRepository,
+                        PaymentRepository paymentRepository,
+                        CartRepository cartRepository,
+                        CartItemRepository cartItemRepository,
+                        ProductStockRepository productStockRepository,
+                        JdbcTemplate jdbcTemplate) {
+        this.orderRepository = orderRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.paymentRepository = paymentRepository;
+        this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
+        this.productStockRepository = productStockRepository;
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Transactional
     public OrderDTO placeOrderFromCart(Integer buyerId, PaymentMethod paymentMethod) {

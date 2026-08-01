@@ -1,7 +1,7 @@
 package com.marketplace.userservice.dto;
 
 public class RegisterUserRequest {
-    private String username, password, firstName, lastName, email, phone, answer;
+    private String username, password, firstName, lastName, email, phone, answer, aadhaarNo;
     private Integer roleId, questionId;
 
     public String getUsername() { return username; }
@@ -16,6 +16,8 @@ public class RegisterUserRequest {
     public void setEmail(String email) { this.email = email; }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+    public String getAadhaarNo() { return aadhaarNo; }
+    public void setAadhaarNo(String aadhaarNo) { this.aadhaarNo = aadhaarNo; }
     public String getAnswer() { return answer; }
     public void setAnswer(String answer) { this.answer = answer; }
     public Integer getRoleId() { return roleId; }
