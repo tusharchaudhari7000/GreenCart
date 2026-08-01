@@ -19,17 +19,26 @@ export const login = createAsyncThunk(
   }
 );
 
-/* 🔍 CHECK AUTH ASYNC THUNK (For page refresh persistence) */
+/* 🔍 CHECK AUTH ASYNC THUNK (Restore session from storage) */
 export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, thunkAPI) => {
     try {
-      console.log("🔍 Checking authentication status...");
-      const res = await api.get("/user/me");
-      console.log("✅ Session restored:", res.data);
-      return res.data;
+      console.log("🔍 Checking authentication status from storage...");
+      const savedState = localStorage.getItem('authState');
+      if (savedState) {
+        const parsed = JSON.parse(savedState);
+        if (parsed?.token && parsed?.tokenExpiry && Date.now() < parsed.tokenExpiry) {
+          console.log("✅ Session restored from storage:", parsed);
+          return parsed;
+        } else {
+          console.warn("⚠️ Token expired or invalid in storage");
+          localStorage.removeItem('authState');
+        }
+      }
+      return thunkAPI.rejectWithValue("No session");
     } catch (err) {
-      console.warn("⚠️ No active session found");
+      console.warn("⚠️ Error checking storage session", err);
       return thunkAPI.rejectWithValue("No session");
     }
   }
@@ -149,9 +158,9 @@ const authSlice = createSlice({
       /* ✅ CHECK AUTH SUCCESS */
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user || action.payload;
         state.token = action.payload.token;
-        state.tokenExpiry = Date.now() + action.payload.expiresIn;
+        state.tokenExpiry = action.payload.tokenExpiry;
         state.role = action.payload.role;
         state.isAuthenticated = true;
       })
