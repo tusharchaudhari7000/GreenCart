@@ -3,8 +3,18 @@ import { store } from '../redux/store';
 import { logout } from '../redux/authSlice';
 
 // Create axios instance with base URL pointing to API Gateway
+const getBaseURL = () => {
+    if (process.env.REACT_APP_API_BASE_URL) {
+        return process.env.REACT_APP_API_BASE_URL;
+    }
+    if (typeof window !== 'undefined' && window.location && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        return `${window.location.protocol}//${window.location.hostname}:8080`;
+    }
+    return 'http://localhost:8080';
+};
+
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080',
+    baseURL: getBaseURL(),
     withCredentials: true
 });
 
