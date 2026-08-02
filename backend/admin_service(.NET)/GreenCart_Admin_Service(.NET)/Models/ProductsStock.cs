@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace GreenCart_Admin_Service_.NET_.Models;
@@ -20,6 +21,7 @@ public partial class ProductsStock
 
     public string? ImagePath { get; set; }
 
+    [NotMapped]
     public string? Status { get; set; }
 
     [JsonIgnore]

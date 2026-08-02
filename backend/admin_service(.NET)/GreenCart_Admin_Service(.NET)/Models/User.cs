@@ -31,7 +31,6 @@ public partial class User
 
     public DateTime? CreatedAt { get; set; }
 
-    [NotMapped]
     public string? AadhaarNo { get; set; }
 
     [NotMapped]

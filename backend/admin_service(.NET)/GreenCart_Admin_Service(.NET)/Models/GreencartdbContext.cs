@@ -294,9 +294,7 @@ public partial class GreencartdbContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.SellerId).HasColumnName("seller_id");
-            entity.Property(e => e.Status)
-                .HasMaxLength(20)
-                .HasColumnName("status");
+            entity.Ignore(e => e.Status);
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductsStocks)
                 .HasForeignKey(d => d.ProductId)
@@ -372,6 +370,9 @@ public partial class GreencartdbContext : DbContext
             entity.HasIndex(e => e.Username, "username").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.AadhaarNo)
+                .HasMaxLength(20)
+                .HasColumnName("aadhaar_no");
             entity.Property(e => e.Answer)
                 .HasMaxLength(255)
                 .HasColumnName("answer");
