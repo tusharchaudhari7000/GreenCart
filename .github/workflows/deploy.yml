@@ -22,7 +22,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/GreenCart
+            git fetch origin deployment
             git checkout deployment
-            git pull origin deployment
+            git reset --hard origin/deployment
             sudo docker compose down --remove-orphans
-            sudo docker compose up -d --build
+            sudo docker compose build --no-cache
+            sudo docker compose up -d
