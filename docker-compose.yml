@@ -108,6 +108,7 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Server=mysql-db;Database=greencartdb;User=root;Password=root;
       - eureka__client__serviceUrl=http://discovery-server:8761/eureka/
+      - eureka__instance__hostName=admin-service
     depends_on:
       mysql-db:
         condition: service_healthy
