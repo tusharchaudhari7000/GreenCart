@@ -19,11 +19,7 @@ export const login = createAsyncThunk(
   }
 );
 
-<<<<<<< HEAD
 /* 🔍 CHECK AUTH ASYNC THUNK (Restore session from storage) */
-=======
-/* 🔍 CHECK AUTH ASYNC THUNK (For page refresh persistence) */
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
 export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, thunkAPI) => {
@@ -33,26 +29,16 @@ export const checkAuth = createAsyncThunk(
       if (savedState) {
         const parsed = JSON.parse(savedState);
         if (parsed?.token && parsed?.tokenExpiry && Date.now() < parsed.tokenExpiry) {
-<<<<<<< HEAD
-          console.log("✅ Session restored from storage:", parsed);
+          console.log("✅ Session valid and restored:", parsed);
           return parsed;
         } else {
           console.warn("⚠️ Token expired or invalid in storage");
           localStorage.removeItem('authState');
         }
       }
-      return thunkAPI.rejectWithValue("No session");
-    } catch (err) {
-      console.warn("⚠️ Error checking storage session", err);
-=======
-          console.log("✅ Session valid and restored:", parsed);
-          return parsed;
-        }
-      }
       return thunkAPI.rejectWithValue("No valid session");
     } catch (err) {
       console.warn("⚠️ Error checking auth session:", err);
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
       return thunkAPI.rejectWithValue("No session");
     }
   }
@@ -69,29 +55,11 @@ export const logoutUser = createAsyncThunk(
       return true;
     } catch (err) {
       console.error("❌ Logout request failed:", err);
-<<<<<<< HEAD
-      // Still log out the user locally
-=======
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
       return true;
     }
   }
 );
 
-<<<<<<< HEAD
-// SES is blocking localStorage, so we can't persist auth state
-// Auth will only work during the current session (no page refresh persistence)
-const initialAuthState = {
-  user: null,
-  token: null,
-  tokenExpiry: null,
-  isAuthenticated: false,
-  role: null,
-  loading: true, // Start with true to allow checkAuth to finish
-  error: null
-};
-
-=======
 const loadInitialAuthState = () => {
   try {
     const savedState = localStorage.getItem('authState');
@@ -125,7 +93,6 @@ const loadInitialAuthState = () => {
 
 const initialAuthState = loadInitialAuthState();
 
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
 const authSlice = createSlice({
   name: "auth",
   initialState: initialAuthState,
@@ -205,23 +172,15 @@ const authSlice = createSlice({
 
       /* ⏳ CHECK AUTH START */
       .addCase(checkAuth.pending, (state) => {
-<<<<<<< HEAD
-        state.loading = true;
-=======
         if (!state.isAuthenticated) {
           state.loading = true;
         }
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
       })
 
       /* ✅ CHECK AUTH SUCCESS */
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.loading = false;
-<<<<<<< HEAD
         state.user = action.payload.user || action.payload;
-=======
-        state.user = action.payload.user;
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
         state.token = action.payload.token;
         state.tokenExpiry = action.payload.tokenExpiry;
         state.role = action.payload.role;
@@ -230,19 +189,13 @@ const authSlice = createSlice({
 
       /* ❌ CHECK AUTH FAILED */
       .addCase(checkAuth.rejected, (state) => {
-<<<<<<< HEAD
-=======
         localStorage.removeItem('authState');
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
         state.token = null;
-<<<<<<< HEAD
-=======
         state.tokenExpiry = null;
         state.role = null;
->>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
       })
 
       /* ⏳ LOGOUT USER START */
