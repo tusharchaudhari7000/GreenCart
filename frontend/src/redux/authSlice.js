@@ -29,16 +29,16 @@ export const checkAuth = createAsyncThunk(
       if (savedState) {
         const parsed = JSON.parse(savedState);
         if (parsed?.token && parsed?.tokenExpiry && Date.now() < parsed.tokenExpiry) {
-          console.log("✅ Session restored from storage:", parsed);
+          console.log("✅ Session valid and restored:", parsed);
           return parsed;
         } else {
           console.warn("⚠️ Token expired or invalid in storage");
           localStorage.removeItem('authState');
         }
       }
-      return thunkAPI.rejectWithValue("No session");
+      return thunkAPI.rejectWithValue("No valid session");
     } catch (err) {
-      console.warn("⚠️ Error checking storage session", err);
+      console.warn("⚠️ Error checking auth session:", err);
       return thunkAPI.rejectWithValue("No session");
     }
   }
@@ -55,23 +55,43 @@ export const logoutUser = createAsyncThunk(
       return true;
     } catch (err) {
       console.error("❌ Logout request failed:", err);
-      // Still log out the user locally
       return true;
     }
   }
 );
 
-// SES is blocking localStorage, so we can't persist auth state
-// Auth will only work during the current session (no page refresh persistence)
-const initialAuthState = {
-  user: null,
-  token: null,
-  tokenExpiry: null,
-  isAuthenticated: false,
-  role: null,
-  loading: true, // Start with true to allow checkAuth to finish
-  error: null
+const loadInitialAuthState = () => {
+  try {
+    const savedState = localStorage.getItem('authState');
+    if (savedState) {
+      const parsed = JSON.parse(savedState);
+      if (parsed?.token && parsed?.tokenExpiry && Date.now() < parsed.tokenExpiry) {
+        return {
+          user: parsed.user,
+          token: parsed.token,
+          tokenExpiry: parsed.tokenExpiry,
+          isAuthenticated: true,
+          role: parsed.role,
+          loading: false,
+          error: null
+        };
+      }
+    }
+  } catch (e) {
+    console.error("Error reading initial authState from localStorage", e);
+  }
+  return {
+    user: null,
+    token: null,
+    tokenExpiry: null,
+    isAuthenticated: false,
+    role: null,
+    loading: false,
+    error: null
+  };
 };
+
+const initialAuthState = loadInitialAuthState();
 
 const authSlice = createSlice({
   name: "auth",
@@ -152,7 +172,9 @@ const authSlice = createSlice({
 
       /* ⏳ CHECK AUTH START */
       .addCase(checkAuth.pending, (state) => {
-        state.loading = true;
+        if (!state.isAuthenticated) {
+          state.loading = true;
+        }
       })
 
       /* ✅ CHECK AUTH SUCCESS */
@@ -167,10 +189,13 @@ const authSlice = createSlice({
 
       /* ❌ CHECK AUTH FAILED */
       .addCase(checkAuth.rejected, (state) => {
+        localStorage.removeItem('authState');
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
         state.token = null;
+        state.tokenExpiry = null;
+        state.role = null;
       })
 
       /* ⏳ LOGOUT USER START */

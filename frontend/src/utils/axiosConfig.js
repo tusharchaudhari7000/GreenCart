@@ -3,6 +3,7 @@ import { store } from '../redux/store';
 import { logout } from '../redux/authSlice';
 
 // Create axios instance with base URL pointing to API Gateway
+<<<<<<< HEAD
 const getBaseURL = () => {
     if (process.env.REACT_APP_API_BASE_URL) {
         return process.env.REACT_APP_API_BASE_URL;
@@ -15,6 +16,10 @@ const getBaseURL = () => {
 
 const api = axios.create({
     baseURL: getBaseURL(),
+=======
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080',
+>>>>>>> 1fdb9a5 (feat: Fix API gateway routing for admin service, resolve EF Core mapping errors, implement forgot password workflow, and fix session persistence on refresh)
     withCredentials: true
 });
 

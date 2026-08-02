@@ -24,10 +24,13 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // Allow OPTIONS preflight requests and public endpoints (login, register, product catalog)
+        // Allow OPTIONS preflight requests and public endpoints (login, register, forgot-password, security questions, locations, product catalog)
         if ("OPTIONS".equalsIgnoreCase(request.getMethod()) || 
             path.startsWith("/user/login") || 
             path.startsWith("/user/register") ||
+            path.startsWith("/user/forgot-password") ||
+            path.startsWith("/security/") ||
+            path.startsWith("/location/") ||
             path.startsWith("/api/products/available") ||
             path.startsWith("/api/categories")) {
             

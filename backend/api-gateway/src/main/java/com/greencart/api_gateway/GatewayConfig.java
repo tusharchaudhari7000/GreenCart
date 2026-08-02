@@ -36,7 +36,7 @@ public class GatewayConfig {
     @Bean
     public RouterFunction<ServerResponse> userServiceRoute() {
         return route("user-service")
-                .route(path("/user/**").or(path("/api/admin/**")), http())
+                .route(path("/user/**"), http())
                 .filter(lb("user-service"))
                 .build();
     }
@@ -67,7 +67,7 @@ public class GatewayConfig {
     @Bean
     public RouterFunction<ServerResponse> adminServiceRoute() {
         return route("admin-service")
-                .route(path("/admin/**"), http())
+                .route(path("/api/admin/**").or(path("/admin/**")), http())
                 .filter(lb("admin-service"))
                 .build();
     }

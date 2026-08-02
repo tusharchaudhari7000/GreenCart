@@ -59,4 +59,35 @@ public class UserServices {
     }
 
     public User getByUsername(String username) { return userRepo.findByUsername(username); }
+
+    public SecurityQuestion getSecurityQuestionByEmail(String email) {
+        User user = userRepo.findByEmail(email);
+        if (user == null || user.getQuestion() == null) {
+            throw new InvalidCredentialsException("User not found or security question not set");
+        }
+        return user.getQuestion();
+    }
+
+    public boolean verifySecurityAnswer(String email, Integer questionId, String answer) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            throw new InvalidCredentialsException("User not found");
+        }
+        if (user.getQuestion() == null || !user.getQuestion().getQuestionId().equals(questionId)) {
+            throw new InvalidQuestionException("Security question mismatch");
+        }
+        if (user.getAnswer() == null || !user.getAnswer().trim().equalsIgnoreCase(answer.trim())) {
+            throw new InvalidCredentialsException("Incorrect security answer");
+        }
+        return true;
+    }
+
+    public void resetPassword(String email, String newPassword) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            throw new InvalidCredentialsException("User not found");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepo.save(user);
+    }
 }
