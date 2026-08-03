@@ -1,0 +1,61 @@
+  const handleAdd = (e) => {
+    e.preventDefault();
+
+    // Validations
+    if (!subcategoryId) return alert("Select subcategory");
+    
+    if (!description.trim()) {
+      return alert("Enter product description");
+    }
+    
+    if (description.trim().length < 10) {
+      return alert("Description must be at least 10 characters long");
+    }
+    
+    if (description.trim().length > 500) {
+      return alert("Description must not exceed 500 characters");
+    }
+    
+    if (!price || parseFloat(price) <= 0) {
+      return alert("Enter a valid price greater than 0");
+    }
+    
+    if (!quantity || parseInt(quantity) < 0) {
+      return alert("Enter a valid quantity (0 or more)");
+    }
+    
+    if (!imageUrls.length) {
+      return alert("Upload product image");
+    }
+
+    const payload = {
+      subCategoryId: parseInt(subcategoryId),
+      description: description.trim(),
+      price: parseFloat(price),
+      quantity: parseInt(quantity),
+      imageUrl: imageUrls[0] // Send first image URL
+    };
+
+    console.log("Sending payload:", payload);
+
+    addProduct(payload).then(() => {
+      setPrice("");
+      setQuantity("");
+      setDescription("");
+      setCategoryId("");
+      setSubcategoryId("");
+      setSubcategories([]);
+      setImages([]);
+      setImageUrls([]);
+      loadProducts();
+      alert("Product added successfully!");
+    }).catch(err => {
+      console.error("Error adding product:", err);
+      console.error("Error response:", err.response?.data);
+      console.error("Error status:", err.response?.status);
+      
+      // Show specific error message from backend
+      const errorMessage = err.response?.data?.message || err.response?.data || "Failed to add product. Please try again.";
+      alert(errorMessage);
+    });
+  };

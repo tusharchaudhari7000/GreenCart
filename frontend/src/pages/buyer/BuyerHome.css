@@ -1,0 +1,308 @@
+/* Buyer Home Page Styles - Refactored for Sidebar */
+
+.buyer-home-layout {
+    display: flex;
+    height: 100vh;
+    /* Fixed height */
+    background: #f4f7f6;
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+/* Sidebar is handled by SharedSidebar.css but we adapt Buyer content */
+
+.buyer-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 260px;
+    /* Offset for fixed sidebar */
+    height: 100vh;
+    overflow: hidden;
+}
+
+.buyer-header {
+    background: #ffffff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.buyer-header h3 {
+    color: #1b5e20;
+    margin: 0;
+    font-weight: 700;
+}
+
+.buyer-main {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    /* Scrollable area */
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    background: white;
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.welcome-section h2 {
+    font-size: 2.8rem;
+    color: #1b5e20;
+    margin-bottom: 1rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Market Controls */
+.controls {
+    margin-bottom: 3rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.search-box {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 1.2rem 1.5rem 1.2rem 4rem;
+    border: 2px solid #eef2f3;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    background: #fdfdfd;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #2e7d32;
+    background: white;
+    box-shadow: 0 10px 20px rgba(46, 125, 50, 0.08);
+}
+
+.category-filter {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #eef2f3;
+    background: white;
+    color: #666;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+    border-color: #2e7d32;
+    color: #2e7d32;
+    background: #f1f8e9;
+}
+
+.category-btn.active {
+    background: #2e7d32;
+    color: white;
+    border-color: #2e7d32;
+    box-shadow: 0 6px 15px rgba(46, 125, 50, 0.2);
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(46, 125, 50, 0.15);
+}
+
+.product-image {
+    height: 240px;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.08);
+}
+
+.product-info {
+    padding: 2rem;
+}
+
+.product-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1b5e20;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+.category-badge {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.product-description {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 1.25rem 0;
+    height: 3rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    background: #fdfdfd;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    margin-bottom: 2rem;
+}
+
+.price-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2e7d32;
+}
+
+.price-unit {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 1.2rem;
+    background: linear-gradient(90deg, #2e7d32, #1b5e20);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(27, 94, 32, 0.2);
+}
+
+.add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(27, 94, 32, 0.3);
+}
+
+/* Notification Styling Match */
+.notification {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 700;
+    z-index: 2000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.notification.success {
+    background: #2e7d32;
+}
+
+.notification.error {
+    background: #c62828;
+}
+
+@media (max-width: 1024px) {
+    .buyer-main-content {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .buyer-main-content {
+        margin-left: 0;
+    }
+
+    .buyer-header {
+        padding: 1rem;
+    }
+
+    .welcome-section h2 {
+        font-size: 2rem;
+    }
+}

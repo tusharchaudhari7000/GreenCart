@@ -1,0 +1,160 @@
+.farmer-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.page-title {
+  margin-bottom: 20px;
+  color: #2e7d32;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.form-row input,
+.form-row select {
+  flex: 1;
+  padding: 10px;
+}
+
+.auto-name {
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.auto-name span {
+  margin-left: 5px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn.primary {
+  background: #2e7d32;
+  color: #fff;
+}
+
+.btn.secondary {
+  background: #e0e0e0;
+}
+
+.image-preview {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.image-preview img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* -------- Description Field Styling -------- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #2e7d32;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.description-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background: #fafafa;
+}
+
+.description-input:focus {
+  outline: none;
+  border-color: #2e7d32;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+.description-input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.helper-text {
+  color: #666;
+  font-size: 12px;
+  font-style: italic;
+  margin-top: -4px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.table-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.description-cell {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  color: #666;
+}
+
+/* -------- Responsive -------- */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
