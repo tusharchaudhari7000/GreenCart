@@ -11,23 +11,23 @@ function OrderDetails() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const fetchOrderDetails = async () => {
+            try {
+                setLoading(true);
+                const data = await getOrderDetails(orderId);
+                setOrder(data);
+            } catch (err) {
+                setError("Failed to load order details");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         if (orderId) {
             fetchOrderDetails();
         }
     }, [orderId]);
-
-    const fetchOrderDetails = async () => {
-        try {
-            setLoading(true);
-            const data = await getOrderDetails(orderId);
-            setOrder(data);
-        } catch (err) {
-            setError("Failed to load order details");
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
