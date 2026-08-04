@@ -35,6 +35,8 @@ public class UserServices {
             throw new InvalidCredentialsException("INVALID_CREDENTIALS");
         if (user.getStatus().equals(UserStatus.PENDING.getCode()))
             throw new AccountNotVerifiedException("ACCOUNT_NOT_VERIFIED");
+        if (user.getStatus().equals(UserStatus.SUSPENDED.getCode()))
+            throw new AccountNotVerifiedException("ACCOUNT_SUSPENDED");
         return user;
     }
 

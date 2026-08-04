@@ -56,6 +56,8 @@ public class UserController {
         } catch (RuntimeException ex) {
             if ("ACCOUNT_NOT_VERIFIED".equals(ex.getMessage()))
                 return ResponseEntity.status(403).body("ACCOUNT_NOT_VERIFIED");
+            if ("ACCOUNT_SUSPENDED".equals(ex.getMessage()))
+                return ResponseEntity.status(403).body("ACCOUNT_SUSPENDED");
             return ResponseEntity.badRequest().body("INVALID_CREDENTIALS");
         }
     }
