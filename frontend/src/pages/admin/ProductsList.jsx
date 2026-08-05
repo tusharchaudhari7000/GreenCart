@@ -23,8 +23,10 @@ function ProductsList() {
 
   const handleToggleVisibility = async (id) => {
     try {
-      await adminService.toggleStockVisibility(id);
-      fetchData(); // Refresh list
+      const updatedStock = await adminService.toggleStockVisibility(id);
+      const isHidden = Boolean(updatedStock?.status && updatedStock.status.toUpperCase() === "HIDDEN");
+      toast.success(isHidden ? "Listing hidden successfully!" : "Listing is now active!");
+      await fetchData(); // Refresh list
     } catch (error) {
       toast.error("Failed to toggle visibility");
     }
@@ -56,7 +58,7 @@ function ProductsList() {
 
       <div className="admin-card-grid">
         {products.map(p => {
-          const isHidden = p.status === "HIDDEN";
+          const isHidden = Boolean(p.status && p.status.toUpperCase() === "HIDDEN");
           return (
             <div key={p.stockId} className="admin-card" style={{ opacity: isHidden ? 0.7 : 1 }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>

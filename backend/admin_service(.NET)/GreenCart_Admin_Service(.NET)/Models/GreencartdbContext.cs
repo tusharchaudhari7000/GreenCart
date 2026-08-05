@@ -294,7 +294,9 @@ public partial class GreencartdbContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.SellerId).HasColumnName("seller_id");
-            entity.Ignore(e => e.Status);
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .HasColumnName("status");
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductsStocks)
                 .HasForeignKey(d => d.ProductId)

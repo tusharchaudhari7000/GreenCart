@@ -21,7 +21,7 @@ public partial class ProductsStock
 
     public string? ImagePath { get; set; }
 
-    [NotMapped]
+    [Column("status")]
     public string? Status { get; set; }
 
     [JsonIgnore]

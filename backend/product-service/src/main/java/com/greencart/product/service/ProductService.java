@@ -58,6 +58,7 @@ public class ProductService {
         stock.setPrice(request.getPrice());
         stock.setQuantity(request.getQuantity());
         stock.setImagePath(request.getImageUrl());
+        stock.setStatus("ACTIVE");
         stock.setCreatedAt(LocalDateTime.now());
 
         // Save stock
