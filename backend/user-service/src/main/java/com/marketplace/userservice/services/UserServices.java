@@ -49,6 +49,7 @@ public class UserServices {
         user.setPhone(request.getPhone());
         user.setAadhaarNo(request.getAadhaarNo());
         user.setAnswer(request.getAnswer());
+        user.setAreaId(request.getAreaId());
         user.setStatus(request.getRoleId() == 2 ? UserStatus.PENDING.getCode() : UserStatus.ACTIVE.getCode());
 
         SecurityQuestion q = questionRepo.findById(request.getQuestionId())

@@ -20,6 +20,12 @@ export default function ForgotPassword() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const getErrorMessage = (err, fallback) => {
+    const data = err.response?.data;
+    if (typeof data === "string") return data;
+    return data?.message || data?.error || fallback;
+  };
+
   // Fetch security question for the given email
   const fetchUserQuestion = async () => {
     if (!email) return;
@@ -30,7 +36,7 @@ export default function ForgotPassword() {
       setQuestion(res.data.question);
       setQuestionId(res.data.questionId);
     } catch (err) {
-      setError(err.response?.data || "User not found or account not active");
+      setError(getErrorMessage(err, "User not found or account not active"));
       setQuestion("");
       setQuestionId(null);
     }
@@ -55,7 +61,7 @@ export default function ForgotPassword() {
       });
       setStep(2);
     } catch (err) {
-      setError(err.response?.data || "Verification failed");
+      setError(getErrorMessage(err, "Verification failed"));
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +92,7 @@ export default function ForgotPassword() {
       toast.success("Password reset successfully!");
       navigate("/login");
     } catch (err) {
-      setError(err.response?.data || "Reset failed");
+      setError(getErrorMessage(err, "Reset failed"));
     } finally {
       setIsLoading(false);
     }

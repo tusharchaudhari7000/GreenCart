@@ -116,9 +116,13 @@ export default function Login() {
         {error && (
           <div className="error-message server">
             <span>🚫</span>
-            {error === "ACCOUNT_NOT_VERIFIED"
-              ? "Your account is not yet verified by admin. Please wait for approval."
-              : error}
+            {typeof error === "string"
+              ? (error === "ACCOUNT_NOT_VERIFIED"
+                ? "Your account is not yet verified by admin. Please wait for approval."
+                : error === "INVALID_CREDENTIALS"
+                ? "Invalid username or password."
+                : error)
+              : (error.message || error.error || "Login failed")}
           </div>
         )}
 

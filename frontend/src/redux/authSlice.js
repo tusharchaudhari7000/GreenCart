@@ -14,7 +14,12 @@ export const login = createAsyncThunk(
       return res.data; // user object from backend with token
     } catch (err) {
       console.error("❌ Login failed:", err);
-      return thunkAPI.rejectWithValue(err.response?.data || "Login failed");
+      const data = err.response?.data;
+      const errorMessage =
+        typeof data === "string"
+          ? data
+          : data?.message || data?.error || "Login failed";
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );

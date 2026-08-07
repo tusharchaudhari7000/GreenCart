@@ -16,8 +16,8 @@ public interface ProductStockRepository extends JpaRepository<ProductStock, Inte
      */
     List<ProductStock> findByProduct_Pid(Integer productId);
 
-    // Find all stock with quantity greater than 0
-    @Query("SELECT ps FROM ProductStock ps WHERE ps.quantity > 0")
+    // Find all stock with quantity greater than 0 and not HIDDEN
+    @Query("SELECT ps FROM ProductStock ps WHERE ps.quantity > 0 AND (ps.status IS NULL OR UPPER(ps.status) != 'HIDDEN')")
     List<ProductStock> findAllAvailableStock();
 
     // Find stock by seller ID

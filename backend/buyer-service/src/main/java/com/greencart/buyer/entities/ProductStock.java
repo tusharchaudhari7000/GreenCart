@@ -43,6 +43,9 @@ public class ProductStock {
     @Column(name = "image_path", length = 500)
     private String imagePath;
 
+    @Column(name = "status", length = 50)
+    private String status;
+
     // Getters and Setters
 
     public int getStockId() {
@@ -99,6 +102,14 @@ public class ProductStock {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public ProductStock() {

@@ -42,6 +42,9 @@ public class User {
     @Column(name = "status", nullable = false)
     private Integer status;
 
+    @Column(name = "area_id")
+    private Integer areaId;
+
     @ManyToOne
     @JoinColumn(name = "question_id")
     private SecurityQuestion question;
@@ -81,6 +84,8 @@ public class User {
     public void setAadhaarNo(String aadhaarNo) { this.aadhaarNo = aadhaarNo; }
     public Integer getStatus() { return status; }
     public void setStatus(Integer status) { this.status = status; }
+    public Integer getAreaId() { return areaId; }
+    public void setAreaId(Integer areaId) { this.areaId = areaId; }
     public SecurityQuestion getQuestion() { return question; }
     public void setQuestion(SecurityQuestion question) { this.question = question; }
     public String getAnswer() { return answer; }

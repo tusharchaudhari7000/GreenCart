@@ -30,7 +30,7 @@ namespace GreenCart_Admin_Service_.NET_
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // ✅ Steeltoe Discovery Client (Eureka)
+            // Steeltoe Discovery Client (Eureka)
             builder.Services.AddDiscoveryClient(builder.Configuration);
 
             var app = builder.Build();

@@ -2,6 +2,32 @@
 
 USE greencartdb;
 
+-- 0. Insert Cities and Areas
+CREATE TABLE IF NOT EXISTS cities (
+    city_id INT PRIMARY KEY AUTO_INCREMENT,
+    city_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS areas (
+    area_id INT PRIMARY KEY AUTO_INCREMENT,
+    area_name VARCHAR(100) NOT NULL,
+    city_id INT NOT NULL,
+    FOREIGN KEY (city_id) REFERENCES cities(city_id)
+);
+
+INSERT INTO cities (city_id, city_name) VALUES
+(1, 'Pune'), (2, 'Mumbai'), (3, 'Nagpur'), (4, 'Nashik'), (5, 'Bangalore'), (6, 'Delhi')
+ON DUPLICATE KEY UPDATE city_name=VALUES(city_name);
+
+INSERT INTO areas (area_id, area_name, city_id) VALUES
+(101, 'Kothrud', 1), (102, 'Baner', 1), (103, 'Wakad', 1), (104, 'Viman Nagar', 1), (105, 'Hadapsar', 1),
+(201, 'Andheri West', 2), (202, 'Bandra', 2), (203, 'Powai', 2), (204, 'Juhu', 2),
+(301, 'Dharampeth', 3), (302, 'Sadar', 3),
+(401, 'Panchavati', 4), (402, 'College Road', 4),
+(501, 'Whitefield', 5), (502, 'Koramangala', 5), (503, 'Indiranagar', 5),
+(601, 'Connaught Place', 6), (602, 'Hauz Khas', 6)
+ON DUPLICATE KEY UPDATE area_name=VALUES(area_name), city_id=VALUES(city_id);
+
 -- 1. Insert Security Questions
 INSERT INTO security_questions (question_id, question) VALUES
 (1, 'What is your favorite color?'),
@@ -10,14 +36,9 @@ INSERT INTO security_questions (question_id, question) VALUES
 (4, 'What city were you born in?')
 ON DUPLICATE KEY UPDATE question=VALUES(question);
 
--- 2. Insert Default Test Users (Password for all is: password123)
--- BCrypt hash for "password123": $2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.
--- UserStatus: 1 = ACTIVE, 2 = PENDING
-INSERT INTO users (user_id, username, password, first_name, last_name, email, phone, role_id, status, question_id, answer, aadhaar_no, created_at) VALUES
-(1, 'adminuser', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'System', 'Admin', 'admin@greencart.com', '9876543210', 1, 1, 1, 'Blue', '123456789012', NOW()),
-(2, 'buyeruser', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'John', 'Buyer', 'buyer@greencart.com', '9876543211', 3, 1, 1, 'Blue', '123456789013', NOW()),
-(3, 'farmeruser', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'Ramesh', 'Farmer', 'farmer@greencart.com', '9876543212', 2, 1, 1, 'Blue', '123456789014', NOW())
-ON DUPLICATE KEY UPDATE username=VALUES(username), password=VALUES(password), status=VALUES(status);
+-- 2. Insert Default Test Users
+-- Users table cleared for manual user registration.
+DELETE FROM users;
 
 -- 3. Insert Categories
 INSERT INTO categories (category_id, category_name, status) VALUES
