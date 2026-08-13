@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenCart_Admin_Service(.NET)", "GreenCart_Admin_Service(.NET)\GreenCart_Admin_Service(.NET).csproj", "{FA4DA017-666D-45DE-A4A6-FC7B47AF6BDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA4DA017-666D-45DE-A4A6-FC7B47AF6BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4DA017-666D-45DE-A4A6-FC7B47AF6BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4DA017-666D-45DE-A4A6-FC7B47AF6BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4DA017-666D-45DE-A4A6-FC7B47AF6BDF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9FC490C6-43CB-4FDC-B862-B41E05EA92A3}
+	EndGlobalSection
+EndGlobal
