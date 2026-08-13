@@ -19,7 +19,7 @@
 * **Axios**: Configured interceptors for JWT authorization headers.
 
 ### **Database & Infrastructure**
-* **MySQL**: Relational database per microservice.
+* **MySQL**: Shared relational database (`greencartdb`) used across services.
 * **Docker & Docker Compose**: Containerization and orchestration (`docker-compose.yml`).
 * **Nginx**: Reverse proxy for production web deployments.
 
@@ -58,13 +58,11 @@ GreenCart/
 ### Local Development Setup
 
 #### 1. Database Setup
-Create the required MySQL databases:
+Create the single shared MySQL database:
 ```sql
-CREATE DATABASE greencart_user;
-CREATE DATABASE greencart_product;
-CREATE DATABASE greencart_buyer;
-CREATE DATABASE greencart_admin;
+CREATE DATABASE greencartdb;
 ```
+*(Optional: Import initial seed data from `database/seed_data.sql`)*
 
 #### 2. Start Backend Services
 Using the provided `startall.bat` (Windows):
